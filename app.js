@@ -1,4 +1,5 @@
 const $ = (selector) => document.querySelector(selector);
+if(document.body.classList.contains('cv-page')){const style=document.createElement('link');style.rel='stylesheet';style.href='cv-editorial.css';document.head.append(style);}
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const translations = {
   en: {workNav:'Selected work',aboutNav:'About',contactNav:"Let's talk ↗",available:'OPEN TO OPPORTUNITIES · HCMC',heroTitle:'Interfaces.<br>Integrations.<br>Real-world tools.',heroIntro:'A frontend foundation.<br>A full-stack mindset.',heroCopy:'I work across web applications, cloud services and automation — connecting what people see with the systems that make it work.',explore:'Explore my work ↓',viewCV:'View CV ↗',showcaseTitle:'From an idea<br>to a working flow.',diagramNote:'Illustrative workflow — not a product screenshot',stackLabel:'TOOLS I WORK WITH',workTitle:'Different products.<br>One practical mindset.',workCopy:'Project work across retail backends, voice generation, automation and business-system integration.',filterAll:'All work',filterAutomation:'Automation',filterWeb:'Web & APIs',aboutNav:'About',aboutTitle:'Frontend roots.<br>Broader horizons.',aboutCopy:'My earlier work focused on Vue.js interfaces for sales and retail products. Project work also includes Laravel backend contributions, cloud workflows and cross-platform automation.',fullCV:'Read the full CV ↗',experienceOne:'Day-Sales and Days-Shop: reusable UI components, REST API integration and responsive business workflows.',experienceTwo:'Corporate and game landing pages, plus C#/Unity UI contributions for Urban Building and OhayHe.',experienceThree:'Backend and cloud integration across Laravel/Node.js APIs, SQL-backed business workflows, browser automation, and asynchronous TTS processing. Hands-on debugging across frontend, API, database, and deployment boundaries.',approachTitle:'Make it clear.<br>Then make it reliable.',principleOne:'Understand the whole flow',principleOneCopy:'Trace the interface, API and data boundaries before changing one piece.',principleTwo:'Keep failure visible',principleTwoCopy:'Treat loading, timeouts and operational errors as part of the product experience.',principleThree:'Verify what actually runs',principleThreeCopy:'Separate source changes, successful builds and observed runtime behavior.',nextChapter:"LET'S BUILD THE NEXT CHAPTER",contactTitle:'Good work starts<br>with a conversation.',contactCopy:'Open to full-stack and backend-oriented opportunities in Ho Chi Minh City.',emailMe:'Email me ↗',download:'Download CV ↓',backTop:'Back to top ↑',caseButton:'Explore project ↗',liveLink:'Live website ↗',problem:'Context',approach:'Approach',focus:'Engineering focus',contributions:'Contribution & project scope',close:'Close case study'},
@@ -59,6 +60,20 @@ function renderCV(){
     const label=document.createElement('h3');label.textContent=t()[scope+'Projects'];projectSection.append(label);
     profile.projects.forEach((p,i)=>{if(projectScope(p)===scope)projectSection.append(entries[i]);});
   }
+  // Editorial CV: full-width introduction, quiet skills rail and timeline content.
+  const resume=$('#resume');
+  const head=resume.querySelector('.resume-head');
+  const sections=[...resume.querySelectorAll('.resume-section')];
+  const identity=document.createElement('div');identity.className='resume-identity';
+  identity.append(head.querySelector('h2'),head.querySelector('.resume-role'),sections[0].querySelector('p'));
+  const contact=head.querySelector('.resume-contact');
+  head.replaceChildren(identity,contact);
+  const columns=document.createElement('div');columns.className='resume-columns';
+  const rail=document.createElement('aside');rail.className='resume-rail';
+  const portrait=document.createElement('img');portrait.className='editorial-portrait';portrait.src='assets/avatar-clean.png';portrait.alt=profile.name;portrait.width=160;portrait.height=180;
+  rail.append(portrait,sections[1],sections[4]);
+  const main=document.createElement('div');main.className='resume-main';main.append(sections[2],projectSection);
+  columns.append(rail,main);resume.replaceChildren(head,columns);
 }
 $('#year').textContent=new Date().getFullYear();
 // Ownership filters complement the existing technology filters.
