@@ -56,7 +56,7 @@ function renderCV(){
   const projectSection=$('#resume').querySelectorAll('.resume-section')[3];
   const entries=[...projectSection.querySelectorAll('.resume-entry')];
   projectSection.replaceChildren();
-  for(const scope of ['personal','company']){
+  for(const scope of ['company','personal']){
     const label=document.createElement('h3');label.textContent=t()[scope+'Projects'];projectSection.append(label);
     profile.projects.forEach((p,i)=>{if(projectScope(p)===scope)projectSection.append(entries[i]);});
   }
@@ -66,12 +66,29 @@ function renderCV(){
   const sections=[...resume.querySelectorAll('.resume-section')];
   const identity=document.createElement('div');identity.className='resume-identity';
   identity.append(head.querySelector('h2'),head.querySelector('.resume-role'),sections[0].querySelector('p'));
+  identity.querySelector('.resume-role').textContent=vi?'Ứng tuyển Java Backend Developer · Spring Boot':'Target role: Java Backend Developer · Spring Boot';
+  identity.querySelector('p:last-child').textContent=vi?'Lập trình viên có kinh nghiệm dự án backend Laravel/Node.js, REST API, SQL và tích hợp hệ thống, cùng nền tảng Vue.js. Hướng tới vị trí Java Backend/Spring Boot; concept API đơn hàng cá nhân tập trung transaction, bảo mật và tính nhất quán dữ liệu. Có kinh nghiệm tích hợp AWS Lambda và debug xuyên suốt giao diện–API–database.':'Developer with project experience in Laravel/Node.js backend services, REST APIs, SQL and system integration, supported by a Vue.js frontend foundation. Targeting Java Backend/Spring Boot roles, with a personal order API concept focused on transactions, security and data consistency. Project work includes AWS Lambda integration and debugging across UI, API and database boundaries.';
   const contact=head.querySelector('.resume-contact');
   head.replaceChildren(identity,contact);
   const columns=document.createElement('div');columns.className='resume-columns';
   const rail=document.createElement('aside');rail.className='resume-rail';
   const portrait=document.createElement('img');portrait.className='editorial-portrait';portrait.src='assets/avatar-clean.png';portrait.alt=profile.name;portrait.width=160;portrait.height=180;
   rail.append(portrait,sections[1],sections[4]);
+  const skillLines=[...sections[1].querySelectorAll('.skill-line')];
+  for(const i of [4,1,2,0,3])sections[1].append(skillLines[i]);
+  const skillsTitle=sections[1].querySelector('h3');skillsTitle.textContent=vi?'Năng lực kỹ thuật':'Technical focus';
+  sections[4].querySelector('h3').textContent=vi?'Backend & chất lượng':'Backend & quality';
+  sections[4].querySelector('.resume-learning').textContent=vi?'Kinh nghiệm dự án: hợp đồng REST API, nghiệp vụ bán lẻ, SQL, tích hợp Node.js/Laravel và debug lỗi hệ thống. Phạm vi thiết kế Java cá nhân: Spring Data JPA, Spring Security/JWT, transaction, idempotency, JUnit/Mockito, Testcontainers và Docker.':'Project experience: REST API contracts, retail workflows, SQL, Node.js/Laravel integration and system debugging. Personal Java design scope: Spring Data JPA, Spring Security/JWT, transactions, idempotency, JUnit/Mockito, Testcontainers and Docker.';
+  const roleFocus=document.createElement('div');roleFocus.className='resume-role-focus';
+  roleFocus.innerHTML=`<span>${vi?'ĐỊNH HƯỚNG BACKEND':'BACKEND FOCUS'}</span><p>Java / Spring Boot <i>·</i> REST API <i>·</i> SQL <i>·</i> AWS Lambda</p>`;
+  identity.append(roleFocus);
+  // Keep professional contributions distinct from unverified personal design scope.
+  projectSection.querySelectorAll('.resume-entry').forEach(entry=>{
+    const title=entry.querySelector('h4');
+    if(title.textContent.includes('Order & Inventory')){
+      const badge=document.createElement('div');badge.className='resume-project-status';badge.textContent=vi?'Dự án cá nhân · thiết kế backend':'Personal project · backend design';title.after(badge);
+    }
+  });
   const main=document.createElement('div');main.className='resume-main';main.append(sections[2],projectSection);
   columns.append(rail,main);resume.replaceChildren(head,columns);
 }

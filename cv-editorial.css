@@ -1,4 +1,9 @@
 /* Reference-inspired editorial CV. Scoped away from the portfolio. */
+.cv-page .resume-role-focus{margin-top:16px;padding-top:12px;border-top:1px solid #800c1328}
+.cv-page .resume-role-focus>span{font:700 10px/1.5 var(--font);letter-spacing:1.8px;color:var(--cv-red)}
+.cv-page .resume-role-focus p{font:600 13px/1.7 var(--font);margin:5px 0 0;color:#3f292b}
+.cv-page .resume-role-focus i{font-style:normal;margin:0 5px;color:#9b7474}
+.cv-page .resume-project-status{font:600 11px/1.6 var(--font);padding:3px 8px;background:#f5efec;color:#800c13;width:fit-content;margin:6px 0}
 .cv-page{--cv-red:#800c13;--cv-cream:#f5efec;background:#eeeae7}
 .cv-page .primary{background:var(--cv-red);border-color:var(--cv-red)}
 .cv-page .cv-paper{font-family:Georgia,'Times New Roman',serif;color:#171313;width:min(100%,1120px);padding:0;border:0;border-radius:0;box-shadow:0 15px 60px #39201d12;overflow:hidden}
